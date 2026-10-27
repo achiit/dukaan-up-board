@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>सर सपना SK – स्टडी ज़ोन</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3f8;--ink:#14213d;--card:#fff;--line:#d9e2ee;--accent:#f4a300;--live:#d62828;--muted:#52627c;--green:#1fa855}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Noto Sans Devanagari",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding-bottom:90px}
+header{position:sticky;top:0;z-index:5;background:var(--ink);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:10px;background:var(--accent);color:var(--ink);font-weight:800;display:grid;place-items:center}
+header b{font-size:1.15rem;font-weight:800}
+header small{display:block;opacity:.75;font-size:.78rem;line-height:1.2}
+main{max-width:720px;margin:0 auto;padding:16px}
+h2{font-size:1.15rem;margin:20px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.view{display:none}.view.on{display:block}
+.cards{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.cls{min-width:260px;flex:1;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer}
+.cls .sub{color:#5a3fc0;font-weight:600;font-size:.9rem}
+.cls .ttl{font-weight:800;margin:2px 0}
+.cls .by{color:var(--muted);font-size:.9rem}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:.9rem}
+.pill{padding:2px 12px;border-radius:99px;font-weight:600;background:#e6ebf3;color:var(--muted)}
+.pill.live{background:var(--live);color:#fff}
+.pill.soon{background:#fff1cc;color:#8a5a00}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 4px;text-align:center;font-weight:600;font-size:.88rem;cursor:pointer;text-decoration:none;color:var(--ink);display:block}
+.tile i{display:grid;place-items:center;width:46px;height:46px;margin:0 auto 6px;border-radius:50%;background:#eceaf8;font-style:normal;font-size:1.4rem}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 16px}
+.item{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}
+a{color:#0b5cad;font-weight:600}
+.player{position:relative;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.chat{height:400px;margin-top:12px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.chat iframe{width:100%;height:100%;border:0}
+.empty{color:var(--muted);padding:14px 0}
+nav{position:fixed;left:12px;right:12px;bottom:12px;max-width:696px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:99px;display:flex;justify-content:space-around;align-items:center;padding:6px 10px;box-shadow:0 6px 20px rgba(20,33,61,.18)}
+nav button,nav a{background:none;border:0;font:inherit;font-size:1.4rem;padding:6px 14px;border-radius:99px;cursor:pointer;text-decoration:none;color:var(--ink)}
+nav .home{background:var(--live);color:#fff;width:56px;height:56px;margin-top:-26px;font-size:1.5rem;box-shadow:0 4px 12px rgba(214,40,40,.4)}
+button:focus-visible,a:focus-visible,.tile:focus-visible,.cls:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">SK</div>
+  <div><b>सर सपना SK</b><small>लाइव क्लास · नोट्स · टेस्ट</small></div>
+</header>
+
+<main>
+  <!-- होम -->
+  <section class="view on" id="v-home">
+    <h2>आज की क्लास</h2>
+    <div class="cards" id="today"></div>
+
+    <h2>मेरा स्टडी ज़ोन</h2>
+    <div class="grid">
+      <div class="tile" tabindex="0" data-go="batches"><i>🎓</i>मेरे बैच</div>
+      <div class="tile" tabindex="0" data-go="pdf"><i>📚</i>PDF नोट्स</div>
+      <div class="tile" tabindex="0" data-go="tests"><i>📝</i>टेस्ट</div>
+      <div class="tile" tabindex="0" data-go="rec"><i>🎬</i>रिकॉर्डिंग</div>
+      <a class="tile" id="wa" href="#"><i>💬</i>WhatsApp</a>
+      <a class="tile" id="tg" href="#"><i>✈️</i>Telegram</a>
+    </div>
+  </section>
+
+  <!-- लाइव -->
+  <section class="view" id="v-live">
+    <h2 id="liveTitle">लाइव क्लास</h2>
+    <div class="player"><iframe id="yt" title="लाइव क्लास" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+    <div class="chat"><iframe id="chat" title="लाइव चैट"></iframe></div>
+  </section>
+
+  <section class="view" id="v-batches"><h2>मेरे बैच</h2><div class="box" id="l-batches"></div></section>
+  <section class="view" id="v-pdf"><h2>PDF नोट्स</h2><div class="box" id="l-pdf"></div></section>
+  <section class="view" id="v-tests"><h2>टेस्ट</h2><div class="box" id="l-tests"></div></section>
+  <section class="view" id="v-rec"><h2>पुरानी क्लास (रिकॉर्डिंग)</h2><div class="box" id="l-rec"></div></section>
+</main>
+
+<nav>
+  <button data-go="pdf" aria-label="नोट्स">📥</button>
+  <button data-go="batches" aria-label="बैच">🔍</button>
+  <button class="home" data-go="home" aria-label="होम">🏠</button>
+  <a id="tg2" href="#" aria-label="Telegram">✈️</a>
+  <a id="wa2" href="#" aria-label="WhatsApp">💬</a>
+</nav>
+
+<script>
+/* ====== यहाँ अपनी जानकारी बदलें ====== */
+var VIDEO_ID = "VIDEO_ID";            // YouTube लाइव वीडियो की ID
+var SITE_DOMAIN = "आपकी-साइट.com";     // चैट के लिए आपकी साइट का डोमेन
+var WHATSAPP = "https://wa.me/91XXXXXXXXXX";
+var TELEGRAM = "https://t.me/aapka_channel";
+
+var TODAY = [   // आज की क्लास: विषय, टॉपिक, समय (24 घंटे)
+  {sub:"गणित", title:"लाइव क्लास", by:"सर सपना SK", h:19, m:0, dur:90}
+];
+var BATCHES = [{t:"मुख्य बैच", d:"रोज़ शाम 7:00 बजे"}];
+var PDFS = [{t:"नोट्स – अध्याय 1", u:"#"},{t:"नोट्स – अध्याय 2", u:"#"}];
+var TESTS = [{t:"साप्ताहिक टेस्ट 1", u:"#"}];
+var RECS = [{t:"कल की क्लास", u:"#"},{t:"परसों की क्लास", u:"#"}];
+/* ===================================== */
+
+var IST=5.5*3600000;
+function $(id){return document.getElementById(id)}
+function p(n){return (n<10?"0":"")+n}
+function show(id){
+  document.querySelectorAll(".view").forEach(function(v){v.classList.remove("on")});
+  $("v-"+id).classList.add("on"); window.scrollTo(0,0);
+}
+function fill(id,arr,tpl){
+  $(id).innerHTML = arr.length ? arr.map(tpl).join("") : '<div class="empty">अभी कुछ नहीं है</div>';
+}
+function fmt(h,m){var s=h>=12?"pm":"am";var hh=h%12||12;return hh+":"+p(m)+" "+s}
+
+function renderToday(){
+  var now=Date.now(), d=new Date(now+IST);
+  var base=Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())-IST;
+  $("today").innerHTML = TODAY.map(function(c,i){
+    var s=base+(c.h*60+c.m)*60000, e=s+c.dur*60000, st,cls,left="";
+    if(now>=s&&now<e){st="● लाइव";cls="live"}
+    else if(now>=e){st="ख़त्म";cls=""}
+    else{st="जल्द शुरू";cls="soon";var t=Math.floor((s-now)/1000);left=p(Math.floor(t/3600))+":"+p(Math.floor(t%3600/60))+":"+p(t%60)}
+    var end=c.h*60+c.m+c.dur;
+    return '<div class="cls" tabindex="0" data-live="'+i+'"><div class="sub">'+c.sub+'</div><div class="ttl">'+c.title+'</div><div class="by">'+c.by+'</div>'+
+      '<div class="meta"><span>🕐 '+fmt(c.h,c.m)+' – '+fmt(Math.floor(end/60)%24,end%60)+'</span><span class="pill '+cls+'">'+st+'</span></div>'+
+      (left?'<div class="meta" style="border:0;margin:0;padding-top:4px">शुरू होने में <b>'+left+'</b></div>':'')+'</div>';
+  }).join("");
+}
+
+function openLive(i){
+  var c=TODAY[i]; $("liveTitle").textContent=c.sub+" – "+c.title;
+  $("yt").src="https://www.youtube.com/embed/"+VIDEO_ID;
+  $("chat").src="https://www.youtube.com/live_chat?v="+VIDEO_ID+"&embed_domain="+encodeURIComponent(SITE_DOMAIN);
+  show("live");
+}
+
+fill("l-batches",BATCHES,function(b){return '<div class="item"><b>'+b.t+'</b><span>'+b.d+'</span></div>'});
+fill("l-pdf",PDFS,function(x){return '<div class="item"><span>'+x.t+'</span><a href="'+x.u+'">खोलें</a></div>'});
+fill("l-tests",TESTS,function(x){return '<div class="item"><span>'+x.t+'</span><a href="'+x.u+'">शुरू करें</a></div>'});
+fill("l-rec",RECS,function(x){return '<div class="item"><span>'+x.t+'</span><a href="'+x.u+'">देखें</a></div>'});
+["wa","wa2"].forEach(function(i){$(i).href=WHATSAPP});
+["tg","tg2"].forEach(function(i){$(i).href=TELEGRAM});
+
+document.addEventListener("click",function(e){
+  var g=e.target.closest("[data-go]"); if(g){show(g.dataset.go);return}
+  var l=e.target.closest("[data-live]"); if(l){openLive(+l.dataset.live)}
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Enter"){var t=e.target; if(t.dataset&&t.dataset.go)show(t.dataset.go); else if(t.dataset&&t.dataset.live)openLive(+t.dataset.live)}
+});
+renderToday(); setInterval(renderToday,1000);
+</script>
+</body>
+</html>
